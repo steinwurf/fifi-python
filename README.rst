@@ -1,66 +1,143 @@
+Fifi-Python
 ===========
-fifi-python
-===========
-
-This repository contains high-level Python bindings for the Fifi Finite Field
-library.
-
-How to Get It
-=============
-To get the Python bindings, you can either build them from source or download
-a prebuilt version from `here`_, or simply get it from pip:
+This package contains high-level python bindings for the Fifi Finite Field
+library. The bindings provide access to the arithmetic operations provided by
+Fifi.
 
 .. image:: https://badge.fury.io/py/fifi.svg
     :target: http://badge.fury.io/py/fifi
+.. image:: https://pypip.in/download/fifi/badge.svg
+    :target: https://pypi.python.org/pypi//fifi/
+    :alt: Downloads
+.. image:: https://pypip.in/py_versions/fifi/badge.svg
+    :target: https://pypi.python.org/pypi/fifi/
+    :alt: Supported Python versions
+.. image:: https://pypip.in/format/fifi/badge.svg
+    :target: https://pypi.python.org/pypi/fifi/
+    :alt: Download format
+.. image:: https://pypip.in/license/fifi/badge.svg
+    :target: https://pypi.python.org/pypi/fifi/
+    :alt: License
 
+License
+=======
 
-.. _here: http://bongo.steinwurf.dk/files/bin/fifi-python
+If you wish to use this library, please obtain a valid license. To do so
+**you must fill out the license request** form_.
 
+This project is available under a research and educational friendly licensee,
+see the details in the README.rst file.
 
-Requirements
+.. _form: http://steinwurf.com/license/
+
+Installation
 ============
+We provide a pip package for easy installation of the fifi-python
+library.
 
-Depending on your platform, you'll need the following to build fifi-python.
+To install this you'll need python and pip installed:
+ - To get python `go here <https://www.python.org/downloads/>`_.
+ - To install pip `follow this guide
+   <https://pip.pypa.io/en/latest/installing.html>`_.
 
-Besides the requirements below, you'll need a recent c++ compiler.
-The compilers used by Steinwurf is listed on the `buildbot page`_.
+Depending on your platform, additional requirements may be needed.
+This is due to the fact that we only provide pre-built versions for some
+specific configurations, but not all.
 
-.. _buildbot page: http://buildbot.steinwurf.dk
+This table shows which platforms are supported by a wheel (pre-built) and which
+are supported by a source package.
 
-Linux
------
-You'll need the the Python development headers to build fifi-python. These can
-be acquired using your distro's package manager.
++---------------------------+----------------+--------------+--------------+----------------+----------------+
+| Platform / Python version | MacOS X 64-bit | Linux 32-bit | Linux 64-bit | Windows 32-bit | Windows 64-bit |
++===========================+================+==============+==============+================+================+
+| **Python 2.7 32-bit**     | Source         |  Source      |  Source      | **Wheel**      | **Wheel**      |
++---------------------------+----------------+--------------+--------------+----------------+----------------+
+| **Python 2.7 64-bit**     | **Wheel**      |  Source      |  Source      | Source         | Source         |
++---------------------------+----------------+--------------+--------------+----------------+----------------+
+| **Python 3.4 32-bit**     | Source         |  Source      |  Source      | Source         | Source         |
++---------------------------+----------------+--------------+--------------+----------------+----------------+
+| **Python 3.4 64-bit**     | Source         |  Source      |  Source      | Source         | Source         |
++---------------------------+----------------+--------------+--------------+----------------+----------------+
 
-On Ubuntu and Debian, you can install the Python development package like this::
+If we do not have a pre-built version for your configuration, you'll need the
+requirements specified in `Requirements for Building From Source`_ to install
+the package.
 
-    sudo apt-get install libpython-dev
+The next steps will be platform dependent.
 
-If you are using Python 3.x, then use this package instead::
+Linux / Mac
+---------
+When you are ready to install python you can simply type::
 
-    sudo apt-get install libpython3-dev
-
-Mac
----
-
-The default installation of python which exists on OSX doesn't include the
-python development header, which is required for fifi-python.
-Therefore you'll need to install python, e.g. using MacPorts.
-When you have acquired python use that installation of python to execute the
-waf commands.
+  sudo pip install fifi
 
 Windows
 -------
+To enable the use of pip from the command line, ensure the ``Scripts``
+subdirectory of your Python installation is available on the system ``PATH``.
+(This is not done automatically.)
 
-After installing a 32-bit Python and Visual Studio 2013, set the following
-environment variable so that Python distutils can detect the new compiler::
+When you are ready to install python you can simply type::
 
-  VS90COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\
+  pip install fifi
 
-How to Build It
-===============
 
-fifi-python can be built like any other Steinwurf project::
+Requirements for Building From Source
+=====================================
+Depending the platform, different steps are needed for building
+fifi-python.
 
+Please note, the compiler you download should be recent. The compilers used by
+Steinwurf is listed on the `buildbot page <http://buildbot.steinwurf.com>`_.
+
+Linux
+-----
+These steps may not work with your specific Linux distribution, but they may
+at least guide you in the right direction.
+
+First acquire the needed requirements from your package management system::
+
+  sudo apt-get update
+  sudo apt-get install python git build-essential libpython-dev
+
+If you are using python 3, you'll need to install ``libpython3-dev`` instead.
+
+MacOS
+-----
+
+Follow `this guide
+<https://help.github.com/articles/set-up-git#setting-up-git>`_ to install git.
+
+Install Xcode and Commandline Tools from the Mac Store.
+
+Windows
+-------
+Install a 32-bit Python and Visual Studio 2013.
+Now set the following environment variable ``VS90COMNTOOLS`` to::
+
+  C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\
+
+so that Python distutils can detect your new compiler.
+
+Building From Source
+====================
+Now that you have all requirements, you are ready to clone, configure and build
+the project::
+
+    git clone https://github.com/steinwurf/fifi-python.git
+
+configure and build the project::
+
+  cd fifi-python
   python waf configure
   python waf build
+
+Now the project is built and you should be able to find the resulting
+fifi.so file here::
+
+  build/linux/src/fifi_python/fifi.so
+
+To use it simply add it to your python path and import it in your python
+script like so::
+
+  >>> import fifi
