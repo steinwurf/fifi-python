@@ -1,5 +1,5 @@
-Fifi-Python-Package
-===================
+Fifi-Python
+===========
 This package contains high-level python bindings for the Fifi Finite Field
 library. The bindings provide access to the arithmeticoperations provided by
 Fifi.
@@ -32,7 +32,7 @@ see the details in the COPYING.txt file.
 
 Installation
 ============
-We provide a pip package for easy installation of the fifi-python-package
+We provide a pip package for easy installation of the fifi-python
 library.
 
 To install this you'll need python and pip installed:
@@ -66,7 +66,7 @@ the package.
 Requirements for Building From Source
 =====================================
 Depending the platform, different steps are needed for building
-fifi-python-package.
+fifi-python.
 
 Please note, the compiler you download should be recent. The compilers used by
 Steinwurf is listed on the `buildbot page <http://buildbot.steinwurf.com>`_.
@@ -106,11 +106,11 @@ Now that you have all requirements, you are ready to clone, configure and build
 the project::
 ::
 
-    git clone https://github.com/steinwurf/fifi-python-package.git
+    git clone https://github.com/steinwurf/fifi-python.git
 
 configure and build the project::
 
-  cd fifi-python-package
+  cd fifi-python
   python waf configure
   python waf build
 
