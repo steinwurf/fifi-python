@@ -1,23 +1,22 @@
-Kodo-Python
+Fifi-Python
 ===========
-This package contains high-level python bindings for the Kodo Network Coding
-library. The bindings provide access to basic functionality provided by Kodo,
-such as encoding and decoding of data. The examples folder provides sample
-applications showing usage of the python API.
+This package contains high-level python bindings for the Fifi Finite Field
+library. The bindings provide access to the arithmetic operations provided by
+Fifi.
 
-.. image:: https://badge.fury.io/py/kodo.svg
-    :target: http://badge.fury.io/py/kodo
-.. image:: https://pypip.in/download/kodo/badge.svg
-    :target: https://pypi.python.org/pypi//kodo/
+.. image:: https://badge.fury.io/py/fifi.svg
+    :target: http://badge.fury.io/py/fifi
+.. image:: https://pypip.in/download/fifi/badge.svg
+    :target: https://pypi.python.org/pypi//fifi/
     :alt: Downloads
-.. image:: https://pypip.in/py_versions/kodo/badge.svg
-    :target: https://pypi.python.org/pypi/kodo/
+.. image:: https://pypip.in/py_versions/fifi/badge.svg
+    :target: https://pypi.python.org/pypi/fifi/
     :alt: Supported Python versions
-.. image:: https://pypip.in/format/kodo/badge.svg
-    :target: https://pypi.python.org/pypi/kodo/
+.. image:: https://pypip.in/format/fifi/badge.svg
+    :target: https://pypi.python.org/pypi/fifi/
     :alt: Download format
-.. image:: https://pypip.in/license/kodo/badge.svg
-    :target: https://pypi.python.org/pypi/kodo/
+.. image:: https://pypip.in/license/fifi/badge.svg
+    :target: https://pypi.python.org/pypi/fifi/
     :alt: License
 
 License
@@ -33,7 +32,7 @@ see the details in the README.rst file.
 
 Installation
 ============
-We provide a pip package for easy installation of the kodo-python
+We provide a pip package for easy installation of the fifi-python
 library.
 
 To install this you'll need python and pip installed:
@@ -70,7 +69,7 @@ Linux / Mac
 ---------
 When you are ready to install python you can simply type:
 
-  sudo pip install kodo
+  sudo pip install fifi
 
 Windows
 -------
@@ -80,13 +79,13 @@ subdirectory of your Python installation is available on the system ``PATH``.
 
 When you are ready to install python you can simply type:
 
-  pip install kodo
+  pip install fifi
 
 
 Requirements for Building From Source
 =====================================
 Depending the platform, different steps are needed for building
-kodo-python.
+fifi-python.
 
 Please note, the compiler you download should be recent. The compilers used by
 Steinwurf is listed on the `buildbot page <http://buildbot.steinwurf.com>`_.
@@ -126,20 +125,20 @@ Now that you have all requirements, you are ready to clone, configure and build
 the project::
 ::
 
-    git clone https://github.com/steinwurf/kodo-python.git
+    git clone https://github.com/steinwurf/fifi-python.git
 
 configure and build the project::
 
-  cd kodo-python
+  cd fifi-python
   python waf configure
   python waf build
 
 Now the project is built and you should be able to find the resulting
-kodo.so file here::
+fifi.so file here::
 
-  build/linux/src/fifi_python/kodo.so
+  build/linux/src/fifi_python/fifi.so
 
 To use it simply add it to your python path and import it in your python
 script like so::
 
-  >>> import kodo
+  >>> import fifi
