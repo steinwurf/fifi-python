@@ -67,7 +67,7 @@ The next steps will be platform dependent.
 
 Linux / Mac
 ---------
-When you are ready to install python you can simply type:
+When you are ready to install python you can simply type::
 
   sudo pip install fifi
 
@@ -77,7 +77,7 @@ To enable the use of pip from the command line, ensure the ``Scripts``
 subdirectory of your Python installation is available on the system ``PATH``.
 (This is not done automatically.)
 
-When you are ready to install python you can simply type:
+When you are ready to install python you can simply type::
 
   pip install fifi
 
@@ -123,7 +123,6 @@ Building From Source
 ====================
 Now that you have all requirements, you are ready to clone, configure and build
 the project::
-::
 
     git clone https://github.com/steinwurf/fifi-python.git
 
