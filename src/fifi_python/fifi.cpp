@@ -4,8 +4,6 @@
 // http://www.steinwurf.com/licensing
 
 #include <boost/python.hpp>
-#include <boost/python/register_ptr_to_python.hpp>
-#include <boost/python/docstring_options.hpp>
 
 #include <fifi/binary.hpp>
 #include <fifi/binary4.hpp>
@@ -23,77 +21,77 @@
 
 namespace fifi_python
 {
-    std::string version()
-    {
-        std::string version = std::string("fifi-python: ");
-        version += STEINWURF_FIFI_PYTHON_VERSION;
+std::string version()
+{
+    std::string version = std::string("fifi-python: ");
+    version += STEINWURF_FIFI_PYTHON_VERSION;
 
-        // Add dependency versions:
-        version += std::string("\n\tboost: ");
+    // Add dependency versions:
+    version += std::string("\n\tboost: ");
 #ifdef STEINWURF_BOOST_VERSION
-        version += std::string(STEINWURF_BOOST_VERSION);
+    version += std::string(STEINWURF_BOOST_VERSION);
 #endif
-        version += std::string("\n\tcpuid: ");
+    version += std::string("\n\tcpuid: ");
 #ifdef STEINWURF_CPUID_VERSION
-        version += std::string(STEINWURF_CPUID_VERSION);
+    version += std::string(STEINWURF_CPUID_VERSION);
 #endif
-        version += std::string("\n\tfifi: ");
+    version += std::string("\n\tfifi: ");
 #ifdef STEINWURF_FIFI_VERSION
-        version += std::string(STEINWURF_FIFI_VERSION);
+    version += std::string(STEINWURF_FIFI_VERSION);
 #endif
-        version += std::string("\n\tplatform: ");
+    version += std::string("\n\tplatform: ");
 #ifdef STEINWURF_PLATFORM_VERSION
-        version += std::string(STEINWURF_PLATFORM_VERSION);
+    version += std::string(STEINWURF_PLATFORM_VERSION);
 #endif
-        version += std::string("\n\tsak: ");
+    version += std::string("\n\tsak: ");
 #ifdef STEINWURF_SAK_VERSION
-        version += std::string(STEINWURF_SAK_VERSION);
+    version += std::string(STEINWURF_SAK_VERSION);
 #endif
 
-        return version;
-    }
+    return version;
+}
 
-    void create_version_function()
-    {
-        using namespace boost::python;
-        scope().attr("__version__") = version();
-    }
+void create_version_function()
+{
+    using namespace boost::python;
+    scope().attr("__version__") = version();
+}
 
 
-    BOOST_PYTHON_MODULE(fifi)
-    {
-        using namespace fifi;
+BOOST_PYTHON_MODULE(fifi)
+{
+    using namespace fifi;
 
-        boost::python::docstring_options doc_options;
-        doc_options.disable_signatures();
+    boost::python::docstring_options doc_options;
+    doc_options.disable_signatures();
 
-        create_version_function();
+    create_version_function();
 
-        finite_field<extended_log_table, binary16>(
-            "extended_log_table", "binary16");
-        finite_field<extended_log_table, binary4>(
-            "extended_log_table", "binary4");
-        finite_field<extended_log_table, binary8>(
-            "extended_log_table", "binary8");
+    finite_field<extended_log_table, binary16>(
+        "extended_log_table", "binary16");
+    finite_field<extended_log_table, binary4>(
+        "extended_log_table", "binary4");
+    finite_field<extended_log_table, binary8>(
+        "extended_log_table", "binary8");
 
-        finite_field<full_table, binary4>("full_table", "binary4");
-        finite_field<full_table, binary8>("full_table", "binary8");
+    finite_field<full_table, binary4>("full_table", "binary4");
+    finite_field<full_table, binary8>("full_table", "binary8");
 
-        finite_field<log_table, binary16>("log_table", "binary16");
-        finite_field<log_table, binary4>("log_table", "binary4");
-        finite_field<log_table, binary8>("log_table", "binary8");
+    finite_field<log_table, binary16>("log_table", "binary16");
+    finite_field<log_table, binary4>("log_table", "binary4");
+    finite_field<log_table, binary8>("log_table", "binary8");
 
-        finite_field<optimal_prime, prime2325>("optimal_prime", "prime2325");
+    finite_field<optimal_prime, prime2325>("optimal_prime", "prime2325");
 
-        finite_field<simple_online, binary16>("simple_online", "binary16");
-        finite_field<simple_online, binary4>("simple_online", "binary4");
-        finite_field<simple_online, binary8>("simple_online", "binary8");
-        finite_field<simple_online, binary>("simple_online", "binary");
+    finite_field<simple_online, binary16>("simple_online", "binary16");
+    finite_field<simple_online, binary4>("simple_online", "binary4");
+    finite_field<simple_online, binary8>("simple_online", "binary8");
+    finite_field<simple_online, binary>("simple_online", "binary");
 
-        fifi_utils<binary>("binary");
-        fifi_utils<binary4>("binary4");
-        fifi_utils<binary8>("binary8");
-        fifi_utils<binary16>("binary16");
-        fifi_utils<prime2325>("prime2325");
-    }
+    fifi_utils<binary>("binary");
+    fifi_utils<binary4>("binary4");
+    fifi_utils<binary8>("binary8");
+    fifi_utils<binary16>("binary16");
+    fifi_utils<prime2325>("prime2325");
+}
 }
