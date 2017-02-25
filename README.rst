@@ -115,7 +115,7 @@ Copy the bindings to your project
 .................................
 
 Another option is to copy the built bindings e.g.
-``build/linux/src/fifi_python/fifi.so``(for Linux) to your project directory.
+``build/linux/src/fifi_python/fifi.so`` (for Linux) to your project directory.
 As an example if your script is stored in ``/path/to/hello.py``, then copy
 the bindings to ``/path/to/fifi.so`` and you should be able to ``import fifi``
 from within the ``hello.py`` script.
