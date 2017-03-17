@@ -7,40 +7,14 @@ from waflib.TaskGen import feature, after_method
 APPNAME = 'fifi-python'
 VERSION = '4.0.0'
 
-import waflib.extras.wurf_options
-
 
 def options(opt):
 
-    opt.load('wurf_common_tools')
-    opt.load('python')
-
-
-def resolve(ctx):
-
-    import waflib.extras.wurf_dependency_resolve as resolve
-
-    ctx.load('wurf_common_tools')
-
-    ctx.add_dependency(resolve.ResolveVersion(
-        name='waf-tools',
-        git_repository='github.com/steinwurf/waf-tools.git',
-        major=3))
-
-    ctx.add_dependency(resolve.ResolveVersion(
-        name='boost',
-        git_repository='github.com/steinwurf/boost.git',
-        major=2))
-
-    ctx.add_dependency(resolve.ResolveVersion(
-        name='fifi',
-        git_repository='github.com/steinwurf/fifi.git',
-        major=21))
+    if opt.is_toplevel():
+        opt.load('python')
 
 
 def configure(conf):
-
-    conf.load("wurf_common_tools")
 
     # Ensure that Python is configured properly
     if not conf.env['BUILD_PYTHON']:
@@ -48,8 +22,6 @@ def configure(conf):
 
 
 def build(bld):
-
-    bld.load("wurf_common_tools")
 
     bld.env.append_unique(
         'DEFINES_STEINWURF_VERSION',
@@ -66,7 +38,7 @@ def build(bld):
     bld.env['CXXFLAGS_PYEXT'] = []
 
     CXX = bld.env.get_flat("CXX")
-    # Matches both /usr/bin/g++ and /user/bin/clang++
+    # Matches both g++ and clang++
     if 'g++' in CXX or 'clang' in CXX:
         bld.env.append_value('CXXFLAGS', '-fPIC')
 

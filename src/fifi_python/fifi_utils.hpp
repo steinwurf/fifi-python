@@ -17,7 +17,7 @@ template<class Field>
 typename Field::value_type get_value(const std::string& elements, uint8_t index)
 {
     typedef typename Field::value_type value_type;
-    return fifi::get_value<Field>((value_type*)elements.c_str(), index);
+    return fifi::get_value<Field>((const uint8_t*)elements.c_str(), index);
 }
 
 template<class Field>
@@ -27,7 +27,7 @@ PyObject* set_value(const std::string& elements, uint8_t index,
     typedef typename Field::value_type value_type;
 
     std::string elements_copy = elements;
-    fifi::set_value<Field>((value_type*)elements_copy.c_str(), index, value);
+    fifi::set_value<Field>((uint8_t*)elements_copy.c_str(), index, value);
 
     return to_python_buffer(elements_copy);
 }
