@@ -27,15 +27,11 @@ PyObject* region_arithmetic(
     const FiniteField& finite_field, Function arithmetic,
     const std::string& dest, const std::string& src)
 {
-    typedef typename FiniteField::value_type value_type;
-    typedef typename FiniteField::field_type field_type;
-
     assert(dest.length() == src.length());
 
     std::string dest_copy = dest;
-    uint32_t length = fifi::size_to_length<field_type>(dest_copy.length());
-    arithmetic(finite_field, (value_type*)dest_copy.c_str(),
-               (value_type*)src.c_str(), length);
+    arithmetic(finite_field, (uint8_t*)dest_copy.c_str(),
+               (const uint8_t*)src.c_str(), (uint32_t)dest_copy.length());
     return to_python_buffer(dest_copy);
 }
 
@@ -80,14 +76,10 @@ PyObject* region_multiply_constant(
     const FiniteField& finite_field,
     const std::string& dest, typename FiniteField::value_type constant)
 {
-    typedef typename FiniteField::value_type value_type;
-    typedef typename FiniteField::field_type field_type;
-
     std::string dest_copy = dest;
-    uint32_t length = fifi::size_to_length<field_type>(dest_copy.length());
 
     finite_field.region_multiply_constant(
-        (value_type*)dest_copy.c_str(), constant, length);
+        (uint8_t*)dest_copy.c_str(), constant, (uint32_t)dest_copy.length());
     return to_python_buffer(dest_copy);
 }
 
@@ -97,15 +89,11 @@ PyObject* region_multiply_add(
     const std::string& dest, const std::string& src,
     typename FiniteField::value_type constant)
 {
-    typedef typename FiniteField::value_type value_type;
-    typedef typename FiniteField::field_type field_type;
-
     std::string dest_copy = dest;
-    uint32_t length = fifi::size_to_length<field_type>(dest_copy.length());
 
     finite_field.region_multiply_add(
-        (value_type*)dest_copy.c_str(), (value_type*)src.c_str(),
-        constant, length);
+        (uint8_t*)dest_copy.c_str(), (const uint8_t*)src.c_str(),
+        constant, (uint32_t)dest_copy.length());
     return to_python_buffer(dest_copy);
 }
 
@@ -115,15 +103,11 @@ PyObject* region_multiply_subtract(
     const std::string& dest, const std::string& src,
     typename FiniteField::value_type constant)
 {
-    typedef typename FiniteField::value_type value_type;
-    typedef typename FiniteField::field_type field_type;
-
     std::string dest_copy = dest;
-    uint32_t length = fifi::size_to_length<field_type>(dest_copy.length());
 
     finite_field.region_multiply_subtract(
-        (value_type*)dest_copy.c_str(), (value_type*)src.c_str(),
-        constant, length);
+        (uint8_t*)dest_copy.c_str(), (const uint8_t*)src.c_str(),
+        constant, (uint32_t)dest_copy.length());
     return to_python_buffer(dest_copy);
 }
 
