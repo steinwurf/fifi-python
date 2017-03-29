@@ -5,7 +5,7 @@ import os
 from waflib.TaskGen import feature, after_method
 
 APPNAME = 'fifi-python'
-VERSION = '4.0.0'
+VERSION = '5.0.0'
 
 
 def options(opt):
