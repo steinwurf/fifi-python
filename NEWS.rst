@@ -8,6 +8,10 @@ Latest
 ------
 * tbd
 
+5.0.1
+-----
+* Patch: The unit tests should only run if this is the top-level project.
+
 5.0.0
 -----
 * Major: Upgrade to waf-tools 4
