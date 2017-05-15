@@ -8,6 +8,10 @@ Latest
 ------
 * tbd
 
+6.0.0
+-----
+* Major: Upgrade to fifi 27
+
 5.0.1
 -----
 * Patch: The unit tests should only run if this is the top-level project.
