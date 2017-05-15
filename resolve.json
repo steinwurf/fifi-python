@@ -4,20 +4,26 @@
         "resolver": "git",
         "method": "semver",
         "major": 4,
-        "sources": ["github.com/steinwurf/waf-tools.git"]
+        "sources": [
+            "github.com/steinwurf/waf-tools.git"
+        ]
     },
     {
         "name": "boost",
         "resolver": "git",
         "method": "semver",
         "major": 3,
-        "sources": ["github.com/steinwurf/boost.git"]
+        "sources": [
+            "github.com/steinwurf/boost.git"
+        ]
     },
     {
         "name": "fifi",
         "resolver": "git",
         "method": "semver",
-        "major": 26,
-        "sources": ["github.com/steinwurf/fifi.git"]
+        "major": 27,
+        "sources": [
+            "github.com/steinwurf/fifi.git"
+        ]
     }
 ]
