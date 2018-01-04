@@ -57,3 +57,6 @@ local.properties
 *.log
 *.vcxproj*
 VSProjects
+
+# Vs-code
+.vscode

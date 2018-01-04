@@ -7,6 +7,7 @@ every change, see the Git log.
 Latest
 ------
 * tbd
+* Major: Upgrade to fifi 27
 
 6.0.0
 -----

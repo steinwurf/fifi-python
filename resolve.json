@@ -21,7 +21,7 @@
         "name": "fifi",
         "resolver": "git",
         "method": "semver",
-        "major": 27,
+        "major": 29,
         "sources": [
             "github.com/steinwurf/fifi.git"
         ]

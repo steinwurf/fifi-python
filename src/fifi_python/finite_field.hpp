@@ -255,13 +255,6 @@ void finite_field(const std::string& arithmetic, const std::string& field)
          "\t:param b: The buffer containing the multiplicands.\n"
          "\t:param constant: The constant multiplier.\n"
          "\t:returns: A buffer containing the differences.\n")
-
-    .add_property(
-        "min_alignment", &finite_field_type::min_alignment,
-        "The region alignment required for the buffers "
-        "used in the finite field computations. The buffers passed to the "
-        "arithmetic functions should have their memory aligned according "
-        "to the value returned by this function.\n\n")
     .add_property(
         "min_granularity", &finite_field_type::min_granularity,
         "The buffer length granularity, i.e., length (number of "
