@@ -140,7 +140,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:return: The inverse of the field element.")
 
     .def("packed_add", &finite_field_type::packed_add,
-        arg("a"), arg("b"),
+         arg("a"), arg("b"),
          "Returns the sum of two field elements. If the field's value type "
          "can represent multiple elements it is assumed that multiple field "
          "elements are stored in the operands, e.g., that 8 field elements "
@@ -169,7 +169,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:param b: The multiplier(s).\n"
          "\t:return: The product(s) of a and b.\n")
     .def("packed_divide", &finite_field_type::packed_divide,
-        arg("a"), arg("b"),
+         arg("a"), arg("b"),
          "Returns the quotient of two field elements. If the field's value "
          "type can represent multiple elements it is assumed that multiple "
          "field elements are stored in the operands, e.g., that 8 field "
@@ -179,7 +179,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:param b: The denominator(s).\n"
          "\t:return: The quotient(s) of a and b.\n")
     .def("packed_invert", &finite_field_type::packed_invert,
-        arg("a"),
+         arg("a"),
          "Returns inverse of a field element. If the field's value type can "
          "represent multiple elements it is assumed that multiple field "
          "elements are stored in the operand, e.g., that 8 field elements "
@@ -188,7 +188,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:return: The inverse of the field element(s).\n")
 
     .def("region_add", &region_add<finite_field_type>,
-        arg("a"), arg("b"),
+         arg("a"), arg("b"),
          "Adds two field element buffers. It is assumed that the buffers "
          "contains \"packed\" values, i.e., that, if possible, multiple "
          "field elements are stored in the same value type.\n\n"
@@ -212,7 +212,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:param b: The buffer containing the multipliers.\n"
          "\t:returns: A buffer containing the products.\n")
     .def("region_divide", &region_divide<finite_field_type>,
-        arg("a"), arg("b"),
+         arg("a"), arg("b"),
          "Divides two field element buffers. It is assumed that the buffers"
          "contains \"packed\" values, i.e., that, if possible, multiple "
          "field elements are stored in the same value type.\n\n"
@@ -222,7 +222,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
 
     .def("region_multiply_constant",
          &region_multiply_constant<finite_field_type>,
-        arg("a"), arg("constant"),
+         arg("a"), arg("constant"),
          "Multiplies a field element buffer with a constant. It is assumed "
          "that the buffer contains \"packed\" values, i.e., that, if "
          "possible, multiple field elements are stored in the same value "
@@ -232,7 +232,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:returns: A buffer containing the products.\n")
     .def("region_multiply_add",
          &region_multiply_add<finite_field_type>,
-        arg("a"), arg("b"), arg("constant"),
+         arg("a"), arg("b"), arg("constant"),
          "Multiplies a field element buffer with a constant, and afterwards "
          "adds the product to a second buffer. It is assumed that the "
          "buffers contains \"packed\" values, i.e., that, if possible, "
@@ -256,8 +256,8 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:returns: A buffer containing the differences.\n")
 
     .def("min_granularity", &finite_field_type::min_granularity,
-        "The buffer length granularity, i.e., length (number of "
-        "value_type elements) by which the buffer must be divisible.\n\n")
+         "The buffer length granularity, i.e., length (number of "
+         "value_type elements) by which the buffer must be divisible.\n\n")
     ;
 }
 }
