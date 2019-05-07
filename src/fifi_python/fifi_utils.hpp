@@ -43,28 +43,28 @@ void fifi_utils(pybind11::module& m, const std::string& field)
           "certain number of field elements.\n\n"
           "elemenets.\n\n"
           "\t:param elements: The number of elements.\n"
-          "\t:returns: The number of value_type elements needed.\n");
+          "\t:return: The number of value_type elements needed.\n");
     m.def((field + std::string("_elements_to_size")).c_str(),
           &fifi::elements_to_size<Field>,
           arg("elements"),
           "Returns the minimum size in bytes required to accommodate a "
           "certain number of field elements.\n\n"
           "\t:param elements: the number of field elements.\n"
-          "\t:return the size in bytes needed to store the field "
+          "\t:return: the size in bytes needed to store the field "
           "elements.\n");
     m.def((field + std::string("_size_to_length")).c_str(),
           &fifi::size_to_length<Field>, arg("bytes"),
           "Returns the number of value_type elements needed to store "
           "a certain number of bytes.\n\n"
           "\t:param bytes: the number of bytes to store.\n"
-          "\t:return the number of value_type elements that need to be "
+          "\t:return: the number of value_type elements that need to be "
           "stored.\n");
     m.def((field + std::string("_length_to_size")).c_str(),
           &fifi::length_to_size<Field>, arg("length"),
           "Returns the size in bytes needed to store a certain "
           "number of value_type elements.\n\n"
           "\t:param length: the number of value_type elements to store.\n"
-          "\t:return the size in bytes needed to store the value_type "
+          "\t:return: the size in bytes needed to store the value_type "
           "elements.\n");
     m.def((field + std::string("_length_to_elements")).c_str(),
           &fifi::length_to_elements<Field>,
@@ -72,17 +72,17 @@ void fifi_utils(pybind11::module& m, const std::string& field)
           "Returns the number of field elements needed to store a certain "
           "number of value_type elements.\n\n"
           "\t:param length: the number of value_type elements.\n"
-          "\t:return the number of field elements needed.\n");
+          "\t:return: the number of field elements needed.\n");
     m.def((field + std::string("_size_to_elements")).c_str(),
           &fifi::size_to_elements<Field>, arg("bytes"),
           "Returns the number of field elements that can fit within a "
           "certain number of bytes.\n\n"
           "\t:param bytes: the number of bytes to store the field elements.\n"
-          "\t:return the number of field elements stored within the bytes.\n");
+          "\t:return: the number of field elements stored within the bytes.\n");
     m.def((field + std::string("_get_value")).c_str(),
           &get_value<Field>,
           arg("elements"), arg("index"),
-          "Useful abstraction functions for accessing field elements in a "
+          "Useful abstraction function for accessing field elements in a "
           "buffer. Note this function assumes that values are packed.\n\n"
           "\t:param elements: elements to get value from.\n"
           "\t:param index: index of element to access in the packed buffer.\n"

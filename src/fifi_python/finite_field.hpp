@@ -118,7 +118,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "Returns the sum of two field elements.\n\n"
          "\t:param a: The augend.\n"
          "\t:param b: The addend.\n"
-         "\t:returns: The sum of a and b.\n")
+         "\t:return: The sum of a and b.\n")
     .def("subtract", &finite_field_type::subtract, arg("a"), arg("b"),
          "Returns the difference of two field elements.\n\n"
          "\t:param a: The minuend.\n"
@@ -145,7 +145,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "can represent multiple elements it is assumed that multiple field "
          "elements are stored in the operands, e.g., that 8 field elements "
          "are stored in a byte-sized value type of a binary field.\n\n"
-         "\t:param: a The augend(s).\n"
+         "\t:param a: The augend(s).\n"
          "\t:param b: The addend(s).\n"
          "\t:return: The sum(s) of a and b.\n")
     .def("packed_subtract", &finite_field_type::packed_subtract,
@@ -155,7 +155,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "multiple field elements are stored in the operands, e.g., that 8 "
          "field elements are stored in a byte-sized value type of a binary "
          "field.\n\n"
-         "\t:param: a The minuend(s).\n"
+         "\t:param a: The minuend(s).\n"
          "\t:param b: The subtrahend(s).\n"
          "\t:return: The difference(s) of a and b.\n")
     .def("packed_multiply", &finite_field_type::packed_multiply,
@@ -165,7 +165,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "field elements are stored in the operands, e.g., that 8 field "
          "elements are stored in a byte-sized value type of a binary "
          "field.\n\n"
-         "\t:param: a The multiplicand(s).\n"
+         "\t:param a: The multiplicand(s).\n"
          "\t:param b: The multiplier(s).\n"
          "\t:return: The product(s) of a and b.\n")
     .def("packed_divide", &finite_field_type::packed_divide,
@@ -175,7 +175,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "field elements are stored in the operands, e.g., that 8 field "
          "elements are stored in a byte-sized value type of a binary "
          "field.\n\n"
-         "\t:param: a The numerator(s).\n"
+         "\t:param a: The numerator(s).\n"
          "\t:param b: The denominator(s).\n"
          "\t:return: The quotient(s) of a and b.\n")
     .def("packed_invert", &finite_field_type::packed_invert,
@@ -194,7 +194,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "field elements are stored in the same value type.\n\n"
          "\t:param a: The buffer containing the augends.\n"
          "\t:param b: The buffer containing the addends.\n"
-         "\t:returns: A buffer containing the sums.\n")
+         "\t:return: A buffer containing the sums.\n")
     .def("region_subtract", &region_subtract<finite_field_type>,
          arg("a"), arg("b"),
          "Subtracts two field element buffers. It is assumed that the "
@@ -202,7 +202,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "multiple field elements are stored in the same value type.\n\n"
          "\t:param a: The buffer containing the minuends.\n"
          "\t:param b: The buffer containing the subtrahends.\n"
-         "\t:returns: A buffer containing the differences.\n")
+         "\t:return: A buffer containing the differences.\n")
     .def("region_multiply", &region_multiply<finite_field_type>,
          arg("a"), arg("b"),
          "Multiplies two field element buffers. It is assumed that the "
@@ -210,7 +210,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "multiple field elements are stored in the same value type.\n\n"
          "\t:param a: The buffer containing the multiplicands.\n"
          "\t:param b: The buffer containing the multipliers.\n"
-         "\t:returns: A buffer containing the products.\n")
+         "\t:return: A buffer containing the products.\n")
     .def("region_divide", &region_divide<finite_field_type>,
          arg("a"), arg("b"),
          "Divides two field element buffers. It is assumed that the buffers"
@@ -218,7 +218,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "field elements are stored in the same value type.\n\n"
          "\t:param a: The buffer containing the numerators.\n"
          "\t:param b: The buffer containing the denominators.\n"
-         "\t:returns: A buffer containing the quotients.\n")
+         "\t:return: A buffer containing the quotients.\n")
 
     .def("region_multiply_constant",
          &region_multiply_constant<finite_field_type>,
@@ -229,7 +229,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "type.\n\n"
          "\t:param a: The buffer containing the multiplicands.\n"
          "\t:param constant: The constant multiplier.\n"
-         "\t:returns: A buffer containing the products.\n")
+         "\t:return: A buffer containing the products.\n")
     .def("region_multiply_add",
          &region_multiply_add<finite_field_type>,
          arg("a"), arg("b"), arg("constant"),
@@ -241,7 +241,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:param a: The buffer containing the augends.\n"
          "\t:param b: The buffer containing the multiplicands.\n"
          "\t:param constant: The constant multiplier.\n"
-         "\t:returns: A buffer containing the sums.\n")
+         "\t:return: A buffer containing the sums.\n")
     .def("region_multiply_subtract",
          &region_multiply_subtract<finite_field_type>,
          arg("a"), arg("b"), arg("constant"),
@@ -253,7 +253,7 @@ void finite_field(pybind11::module& m, const std::string& arithmetic,
          "\t:param a: The buffer containing the minuends.\n"
          "\t:param b: The buffer containing the multiplicands.\n"
          "\t:param constant: The constant multiplier.\n"
-         "\t:returns: A buffer containing the differences.\n")
+         "\t:return: A buffer containing the differences.\n")
 
     .def("min_granularity", &finite_field_type::min_granularity,
          "The buffer length granularity, i.e., length (number of "
