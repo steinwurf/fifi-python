@@ -1,22 +1,10 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-extra_linkflags = []
-extra_cxxflags = []
-CXX = bld.env.get_flat("CXX")
-# Matches MSVC
-if 'CL.exe' in CXX or 'cl.exe' in CXX:
-    extra_linkflags = ['/EXPORT:initfifi']
-    extra_cxxflags = ['/bigobj']
-
 bld(
     features='cxx cxxshlib pyext',
     source=bld.path.ant_glob('**/*.cpp'),
     target='fifi',
     name='fifi-python',
-    cxxflags=extra_cxxflags,
-    linkflags=extra_linkflags,
-    use=['STEINWURF_VERSION', 'boost_filesystem', 'boost_includes',
-         'boost_python', 'boost_system', 'fifi', 'fifi_includes',
-         'sak_includes']
+    use=['STEINWURF_VERSION', 'pybind11_includes', 'fifi']
 )

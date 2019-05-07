@@ -13,14 +13,11 @@ def options(opt):
         opt.load('python')
 
 
-def configure(conf):
+def build(bld):
 
     # Ensure that Python is configured properly
-    if not conf.env['BUILD_PYTHON']:
-        conf.fatal('Python was not configured properly')
-
-
-def build(bld):
+    if not bld.env['BUILD_PYTHON']:
+        bld.fatal('Python was not configured properly')
 
     bld.env.append_unique(
         'DEFINES_STEINWURF_VERSION',

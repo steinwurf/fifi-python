@@ -13,15 +13,11 @@ project_name = 'fifi-python'
 project_dependencies = \
     [
         'waf-tools',
-        'gtest',
-        'boost',
+        'pybind11',
         'allocate',
         'storage',
-        'gauge',
-        'tables',
         'cpuid',
         'platform',
-        'stub',
         'fifi',
     ]
 
