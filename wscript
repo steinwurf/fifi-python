@@ -23,10 +23,6 @@ def build(bld):
         'DEFINES_STEINWURF_VERSION',
         'STEINWURF_FIFI_PYTHON_VERSION="{}"'.format(VERSION))
 
-#    CXX = bld.env.get_flat("CXX")
-#    if 'g++' in CXX or 'clang' in CXX:
-#        bld.env.append_value('CXXFLAGS', '-fPIC')
-
     bld.recurse('src/fifi_python')
 
     if bld.is_toplevel():
