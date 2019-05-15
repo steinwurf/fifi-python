@@ -15,10 +15,6 @@ def options(opt):
 
 def build(bld):
 
-    # Ensure that Python is configured properly
-    if not bld.env['BUILD_PYTHON']:
-        bld.fatal('Python was not configured properly')
-
     bld.env.append_unique(
         'DEFINES_STEINWURF_VERSION',
         'STEINWURF_FIFI_PYTHON_VERSION="{}"'.format(VERSION))
