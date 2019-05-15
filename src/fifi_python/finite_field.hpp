@@ -5,25 +5,15 @@
 
 #pragma once
 
+#include <pybind11/pybind11.h>
+
+#include <string>
 #include <functional>
-
-#include <boost/python.hpp>
-
-#include <fifi/fifi_utils.hpp>
 
 namespace fifi_python
 {
-PyObject* to_python_buffer(const std::string& item)
-{
-#if PY_MAJOR_VERSION >= 3
-    return PyBytes_FromStringAndSize(item.c_str(), item.length());
-#else
-    return PyString_FromStringAndSize(item.c_str(), item.length());
-#endif
-}
-
 template<class FiniteField, class Function>
-PyObject* region_arithmetic(
+pybind11::bytes region_arithmetic(
     const FiniteField& finite_field, Function arithmetic,
     const std::string& dest, const std::string& src)
 {
@@ -32,11 +22,11 @@ PyObject* region_arithmetic(
     std::string dest_copy = dest;
     arithmetic(finite_field, (uint8_t*)dest_copy.c_str(),
                (const uint8_t*)src.c_str(), (uint32_t)dest_copy.length());
-    return to_python_buffer(dest_copy);
+    return pybind11::bytes(dest_copy);
 }
 
 template<class FiniteField>
-PyObject* region_add(
+pybind11::bytes region_add(
     const FiniteField& finite_field,
     const std::string& dest, const std::string& src)
 {
@@ -45,7 +35,7 @@ PyObject* region_add(
 }
 
 template<class FiniteField>
-PyObject* region_subtract(
+pybind11::bytes region_subtract(
     const FiniteField& finite_field,
     const std::string& dest, const std::string& src)
 {
@@ -54,7 +44,7 @@ PyObject* region_subtract(
 }
 
 template<class FiniteField>
-PyObject* region_multiply(
+pybind11::bytes region_multiply(
     const FiniteField& finite_field,
     const std::string& dest, const std::string& src)
 {
@@ -63,7 +53,7 @@ PyObject* region_multiply(
 }
 
 template<class FiniteField>
-PyObject* region_divide(
+pybind11::bytes region_divide(
     const FiniteField& finite_field,
     const std::string& dest, const std::string& src)
 {
@@ -72,7 +62,7 @@ PyObject* region_divide(
 }
 
 template<class FiniteField>
-PyObject* region_multiply_constant(
+pybind11::bytes region_multiply_constant(
     const FiniteField& finite_field,
     const std::string& dest, typename FiniteField::value_type constant)
 {
@@ -80,11 +70,11 @@ PyObject* region_multiply_constant(
 
     finite_field.region_multiply_constant(
         (uint8_t*)dest_copy.c_str(), constant, (uint32_t)dest_copy.length());
-    return to_python_buffer(dest_copy);
+    return pybind11::bytes(dest_copy);
 }
 
 template<class FiniteField>
-PyObject* region_multiply_add(
+pybind11::bytes region_multiply_add(
     const FiniteField& finite_field,
     const std::string& dest, const std::string& src,
     typename FiniteField::value_type constant)
@@ -94,11 +84,11 @@ PyObject* region_multiply_add(
     finite_field.region_multiply_add(
         (uint8_t*)dest_copy.c_str(), (const uint8_t*)src.c_str(),
         constant, (uint32_t)dest_copy.length());
-    return to_python_buffer(dest_copy);
+    return pybind11::bytes(dest_copy);
 }
 
 template<class FiniteField>
-PyObject* region_multiply_subtract(
+pybind11::bytes region_multiply_subtract(
     const FiniteField& finite_field,
     const std::string& dest, const std::string& src,
     typename FiniteField::value_type constant)
@@ -108,36 +98,38 @@ PyObject* region_multiply_subtract(
     finite_field.region_multiply_subtract(
         (uint8_t*)dest_copy.c_str(), (const uint8_t*)src.c_str(),
         constant, (uint32_t)dest_copy.length());
-    return to_python_buffer(dest_copy);
+    return pybind11::bytes(dest_copy);
 }
 
 template<template<class> class Arithmetic, class Field>
-void finite_field(const std::string& arithmetic, const std::string& field)
+void finite_field(pybind11::module& m, const std::string& arithmetic,
+                  const std::string& field)
 {
-    using namespace boost::python;
+    using namespace pybind11;
 
     std::string name = arithmetic + std::string("_") + field;
 
-    typedef Arithmetic<Field> finite_field_type;
+    using finite_field_type = Arithmetic<Field>;
 
-    class_<finite_field_type, boost::noncopyable>(
-        name.c_str(), "A finite field implementation")
-    .def("add", &finite_field_type::add, args("a", "b"),
+    pybind11::class_<finite_field_type>(
+        m, name.c_str(), "A finite field implementation")
+    .def(init<>())
+    .def("add", &finite_field_type::add, arg("a"), arg("b"),
          "Returns the sum of two field elements.\n\n"
          "\t:param a: The augend.\n"
          "\t:param b: The addend.\n"
-         "\t:returns: The sum of a and b.\n")
-    .def("subtract", &finite_field_type::subtract, args("a", "b"),
+         "\t:return: The sum of a and b.\n")
+    .def("subtract", &finite_field_type::subtract, arg("a"), arg("b"),
          "Returns the difference of two field elements.\n\n"
          "\t:param a: The minuend.\n"
          "\t:param b: The subtrahend.\n"
          "\t:return: The difference of a and b.\n")
-    .def("multiply", &finite_field_type::multiply, args("a", "b"),
+    .def("multiply", &finite_field_type::multiply, arg("a"), arg("b"),
          "Returns the product of two field elements.\n\n"
          "\t:param a: The multiplicand.\n"
          "\t:param b: The multiplier.\n"
          "\t:return: The product of a and b.\n")
-    .def("divide", &finite_field_type::divide, args("a", "b"),
+    .def("divide", &finite_field_type::divide, arg("a"), arg("b"),
          "Returns the quotient of two field elements.\n\n"
          "\t:param a: The numerator.\n"
          "\t:param b: The denominator.\n"
@@ -147,44 +139,47 @@ void finite_field(const std::string& arithmetic, const std::string& field)
          "\t:param a: Element to invert.\n"
          "\t:return: The inverse of the field element.")
 
-    .def("packed_add", &finite_field_type::packed_add, args("a", "b"),
+    .def("packed_add", &finite_field_type::packed_add,
+         arg("a"), arg("b"),
          "Returns the sum of two field elements. If the field's value type "
          "can represent multiple elements it is assumed that multiple field "
          "elements are stored in the operands, e.g., that 8 field elements "
          "are stored in a byte-sized value type of a binary field.\n\n"
-         "\t:param: a The augend(s).\n"
+         "\t:param a: The augend(s).\n"
          "\t:param b: The addend(s).\n"
          "\t:return: The sum(s) of a and b.\n")
     .def("packed_subtract", &finite_field_type::packed_subtract,
-         args("a", "b"),
+         arg("a"), arg("b"),
          "Returns the difference of two field elements. If the field's "
          "value type can represent multiple elements it is assumed that "
          "multiple field elements are stored in the operands, e.g., that 8 "
          "field elements are stored in a byte-sized value type of a binary "
          "field.\n\n"
-         "\t:param: a The minuend(s).\n"
+         "\t:param a: The minuend(s).\n"
          "\t:param b: The subtrahend(s).\n"
          "\t:return: The difference(s) of a and b.\n")
     .def("packed_multiply", &finite_field_type::packed_multiply,
-         args("a", "b"),
+         arg("a"), arg("b"),
          "Returns the product of two field elements. If the field's value "
          "type can represent multiple elements it is assumed that multiple "
          "field elements are stored in the operands, e.g., that 8 field "
          "elements are stored in a byte-sized value type of a binary "
          "field.\n\n"
-         "\t:param: a The multiplicand(s).\n"
+         "\t:param a: The multiplicand(s).\n"
          "\t:param b: The multiplier(s).\n"
          "\t:return: The product(s) of a and b.\n")
-    .def("packed_divide", &finite_field_type::packed_divide, args("a", "b"),
+    .def("packed_divide", &finite_field_type::packed_divide,
+         arg("a"), arg("b"),
          "Returns the quotient of two field elements. If the field's value "
          "type can represent multiple elements it is assumed that multiple "
          "field elements are stored in the operands, e.g., that 8 field "
          "elements are stored in a byte-sized value type of a binary "
          "field.\n\n"
-         "\t:param: a The numerator(s).\n"
+         "\t:param a: The numerator(s).\n"
          "\t:param b: The denominator(s).\n"
          "\t:return: The quotient(s) of a and b.\n")
-    .def("packed_invert", &finite_field_type::packed_invert, arg("a"),
+    .def("packed_invert", &finite_field_type::packed_invert,
+         arg("a"),
          "Returns inverse of a field element. If the field's value type can "
          "represent multiple elements it is assumed that multiple field "
          "elements are stored in the operand, e.g., that 8 field elements "
@@ -192,48 +187,52 @@ void finite_field(const std::string& arithmetic, const std::string& field)
          "\t:param a: Element(s) to invert.\n"
          "\t:return: The inverse of the field element(s).\n")
 
-    .def("region_add", &region_add<finite_field_type>, args("a", "b"),
+    .def("region_add", &region_add<finite_field_type>,
+         arg("a"), arg("b"),
          "Adds two field element buffers. It is assumed that the buffers "
          "contains \"packed\" values, i.e., that, if possible, multiple "
          "field elements are stored in the same value type.\n\n"
          "\t:param a: The buffer containing the augends.\n"
          "\t:param b: The buffer containing the addends.\n"
-         "\t:returns: A buffer containing the sums.\n")
+         "\t:return: A buffer containing the sums.\n")
     .def("region_subtract", &region_subtract<finite_field_type>,
-         args("a", "b"),
+         arg("a"), arg("b"),
          "Subtracts two field element buffers. It is assumed that the "
          "buffers contains \"packed\" values, i.e., that, if possible, "
          "multiple field elements are stored in the same value type.\n\n"
          "\t:param a: The buffer containing the minuends.\n"
          "\t:param b: The buffer containing the subtrahends.\n"
-         "\t:returns: A buffer containing the differences.\n")
+         "\t:return: A buffer containing the differences.\n")
     .def("region_multiply", &region_multiply<finite_field_type>,
-         args("a", "b"),
+         arg("a"), arg("b"),
          "Multiplies two field element buffers. It is assumed that the "
          "buffers contains \"packed\" values, i.e., that, if possible, "
          "multiple field elements are stored in the same value type.\n\n"
          "\t:param a: The buffer containing the multiplicands.\n"
          "\t:param b: The buffer containing the multipliers.\n"
-         "\t:returns: A buffer containing the products.\n")
-    .def("region_divide", &region_divide<finite_field_type>, args("a", "b"),
+         "\t:return: A buffer containing the products.\n")
+    .def("region_divide", &region_divide<finite_field_type>,
+         arg("a"), arg("b"),
          "Divides two field element buffers. It is assumed that the buffers"
          "contains \"packed\" values, i.e., that, if possible, multiple "
          "field elements are stored in the same value type.\n\n"
          "\t:param a: The buffer containing the numerators.\n"
          "\t:param b: The buffer containing the denominators.\n"
-         "\t:returns: A buffer containing the quotients.\n")
+         "\t:return: A buffer containing the quotients.\n")
 
     .def("region_multiply_constant",
-         &region_multiply_constant<finite_field_type>, args("a", "constant"),
+         &region_multiply_constant<finite_field_type>,
+         arg("a"), arg("constant"),
          "Multiplies a field element buffer with a constant. It is assumed "
          "that the buffer contains \"packed\" values, i.e., that, if "
          "possible, multiple field elements are stored in the same value "
          "type.\n\n"
          "\t:param a: The buffer containing the multiplicands.\n"
          "\t:param constant: The constant multiplier.\n"
-         "\t:returns: A buffer containing the products.\n")
+         "\t:return: A buffer containing the products.\n")
     .def("region_multiply_add",
-         &region_multiply_add<finite_field_type>, args("a", "b", "constant"),
+         &region_multiply_add<finite_field_type>,
+         arg("a"), arg("b"), arg("constant"),
          "Multiplies a field element buffer with a constant, and afterwards "
          "adds the product to a second buffer. It is assumed that the "
          "buffers contains \"packed\" values, i.e., that, if possible, "
@@ -242,10 +241,10 @@ void finite_field(const std::string& arithmetic, const std::string& field)
          "\t:param a: The buffer containing the augends.\n"
          "\t:param b: The buffer containing the multiplicands.\n"
          "\t:param constant: The constant multiplier.\n"
-         "\t:returns: A buffer containing the sums.\n")
+         "\t:return: A buffer containing the sums.\n")
     .def("region_multiply_subtract",
          &region_multiply_subtract<finite_field_type>,
-         args("a", "b", "constant"),
+         arg("a"), arg("b"), arg("constant"),
          "Multiplies a field element buffer with a constant, and afterwards "
          "subtracts the product from a second buffer. It is assumed that "
          "the buffers contains \"packed\" values, i.e., that, if possible, "
@@ -254,11 +253,11 @@ void finite_field(const std::string& arithmetic, const std::string& field)
          "\t:param a: The buffer containing the minuends.\n"
          "\t:param b: The buffer containing the multiplicands.\n"
          "\t:param constant: The constant multiplier.\n"
-         "\t:returns: A buffer containing the differences.\n")
-    .add_property(
-        "min_granularity", &finite_field_type::min_granularity,
-        "The buffer length granularity, i.e., length (number of "
-        "value_type elements) by which the buffer must be divisible.\n\n")
+         "\t:return: A buffer containing the differences.\n")
+
+    .def("min_granularity", &finite_field_type::min_granularity,
+         "The buffer length granularity, i.e., length (number of "
+         "value_type elements) by which the buffer must be divisible.\n\n")
     ;
 }
 }

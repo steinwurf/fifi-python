@@ -13,33 +13,11 @@ def options(opt):
         opt.load('python')
 
 
-def configure(conf):
-
-    # Ensure that Python is configured properly
-    if not conf.env['BUILD_PYTHON']:
-        conf.fatal('Python was not configured properly')
-
-
 def build(bld):
 
     bld.env.append_unique(
         'DEFINES_STEINWURF_VERSION',
         'STEINWURF_FIFI_PYTHON_VERSION="{}"'.format(VERSION))
-
-    # Remove NDEBUG which is added from conf.check_python_headers
-    flag_to_remove = 'NDEBUG'
-    defines = ['DEFINES_PYEMBED', 'DEFINES_PYEXT']
-    for define in defines:
-        while(flag_to_remove in bld.env[define]):
-            bld.env[define].remove(flag_to_remove)
-
-    bld.env['CFLAGS_PYEXT'] = []
-    bld.env['CXXFLAGS_PYEXT'] = []
-
-    CXX = bld.env.get_flat("CXX")
-    # Matches both g++ and clang++
-    if 'g++' in CXX or 'clang' in CXX:
-        bld.env.append_value('CXXFLAGS', '-fPIC')
 
     bld.recurse('src/fifi_python')
 
