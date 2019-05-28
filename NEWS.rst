@@ -7,6 +7,9 @@ every change, see the Git log.
 Latest
 ------
 * tbd
+
+7.0.0
+-----
 * Major: Use pybind11 instead of boost-python.
 * Minor: Updated the license to STEINWURF EVALUATION LICENSE 1.0.
 * Major: Upgrade to fifi 29
